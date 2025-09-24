@@ -1,0 +1,40 @@
+/* Centered container for header and footer */
+.header {
+  max-width: 900px;   /* limit width */
+  margin: 0 auto;      /* center horizontally */
+  padding: 0 20px;     /* some side padding */
+}
+
+/* Header */
+header {
+  background-color: #3cef96;
+
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+header .header {
+  display: flex;
+  justify-content: space-between; /* title left, nav right */
+  align-items: center;
+}
+
+/* Footer */
+footer {
+
+background-color: rgb(138, 121, 121);
+  padding: 15px 0;
+  margin-top:auto; /* pushes footer down */
+}
+
+footer .footer {
+  text-align: center;
+}
+link{
+     margin-left: 5px;
+     margin-right: 5px
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
+    flex-direction: column;
+    margin: 0;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+input, select {
+    background: rgba(255, 255, 255, 0.2);
+    color: #333;
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+input:focus, select:focus {
+    border: 1px solid #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #218838;
+}
+
+.switch {
+    margin-top: 15px;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.switch a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.switch a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #333;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Signup</h1>
+    
+        <form action="/edit/<%=edit.id%>?_method=PUT" method="POST" onsubmit="return validateForm(event)">
+            <input id="username" type="text" 
+           value="<%=edit.username%>" placeholder="enter username" required name="username">
+            <input id="email" value="<%=edit.email%>" type="email" placeholder="Email" required name="email">
+            <input id="mobile" value="<%edit.mobile%>" type="number" placeholder="mobile No" required name="mobile">
+            <input id="password" type="password" placeholder="Password" required name="password">
+    
+           
+    
+            <button id="submit" type="submit">Update</button>
+        </form>
+    
+      
+   
+
+  <%- include("partials/footer") %>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+ <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+   
+    main {
+      padding: 30px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #111827;
+      font-size: 22px;
+      border-left: 5px solid #3b82f6;
+      padding-left: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: white;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    li:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+    }
+
+    .rep-info {
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: #374151;
+      line-height: 1.6;
+    }
+
+    form {
+      display: inline-block;
+      margin-top: 5px;
+    }
+
+    button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .approve {
+      background: #10b981;
+      color: white;
+    }
+
+    .approve:hover {
+      background: #059669;
+    }
+
+    .reject {
+      background: #ef4444;
+      color: white;
+    }
+
+    .reject:hover {
+      background: #dc2626;
+    }
+  </style>
+</head>
+<body>
+    <%- include("partials/header") %>
+ 
+
+  <main>
+    <h2>Pending Representatives</h2>
+  <ul>
+  <% reps.forEach(rep => { %>
+    <li style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc;">
+      <strong><%= rep.username %></strong> | <%= rep.email %> | <%= rep.mobile %> |
+      <%= rep.district %>, <%= rep.taluka %>, <%= rep.village %>
+
+      <% if (rep.status === "pending") { %>
+        <form action="/admin/approve/<%= rep.uniq %>" method="POST" style="display:inline;">
+          <button class="approve">Approve</button>
+        </form>
+        <form action="/admin/reject/<%= rep.uniq %>" method="POST" style="display:inline;">
+          <button class="reject">Reject</button>
+        </form>
+      <% } else if (rep.status === "approved") { %>
+        <button class="approve" disabled>Approved ✅</button>
+        <form action="/admin/reject/<%= rep.uniq %>" method="POST" style="display:inline;">
+          <button class="reject">Reject</button>
+        </form>
+        
+      <% } 
+       
+       if (rep.status === "rejected") { %>
+        <form action="/admin/approve/<%= rep.uniq %>" method="POST" style="display:inline;">
+          <button class="approve">Approve</button>
+        </form>
+        <form action="/admin/reject/<%= rep.uniq %>" method="POST" style="display:inline;">
+          <button class="reject">Rejected</button>
+        </form>
+      <% }
+      
+      
+      %>
+
+       
+    </li>
+  <% }) %>
+</ul>
+
+
+  </main>
+  
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Profile container positioned at top-left */
+        .profile-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-align: left;
+        }
+
+        /* Profile Icon Styling */
+        .profile-icon {
+            font-size: 40px;
+            color: #007bff;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Profile Details Styling */
+        .profile-details {
+            display: none;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 250px;
+            margin-top: 10px;
+        }
+
+        h3, h4 {
+            color: #007bff;
+            margin: 5px 0;
+        }
+
+        p {
+            font-size: 14px;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .divider {
+            border-bottom: 2px solid #ddd;
+            margin: 10px 0;
+        }
+        textarea {
+            width: 300px;
+            margin-top: 250px;
+            margin-left: 500px;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        h2{
+           text-align: center;
+        }
+        button{
+            margin-left: 500px;
+        }
+        #comp {
+        width: 60%;
+        margin: 20px auto;
+        padding: 15px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #comp div {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        font-size: 16px;
+        color: #333;
+    }
+
+    #comp div:last-child {
+        border-bottom: none;
+    }
+    #btn{
+
+margin-left: 5px;
+}
+
+    </style>
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+  <!-- Header -->
+  <%- include("partials/header") %>
+    <div class="profile-container">
+        <!-- Profile Icon -->
+        <i class="fa-solid fa-user-circle profile-icon" onclick="toggleProfile()"></i>
+
+        <!-- Profile Details -->
+        <div class="profile-details" id="profileDetails">
+            <h3>Profile</h3>
+            <p><strong>Username:</strong> <%= mainUser.username %></p>
+            <p><strong>Email:</strong> <%= mainUser.email %></p>
+            <p><strong>Mobile:</strong> <%= mainUser.mobile %></p>
+
+            <div class="divider"></div>
+
+            <h4>Address</h4>
+            <p><strong>District:</strong> <%= mainUser.district %></p>
+            <p><strong>Taluka:</strong> <%= mainUser.taluka %></p>
+            <p><strong>Village:</strong> <%= mainUser.village %></p>
+            <p><strong>your area representative:</strong><%=mainUser.role%></p>
+            <form action="/edit/<%=mainUser.id%>"><button id="btn">Edit Your Profile</button></form>
+            <form action="/logout"><button id="btn">logout</button></form>
+        </div>
+    </div>
+    <h2>complaints recieved</h2>
+    <div id="comp">
+        <%for(let com of mainUser.complaint){
+            %>
+            <div><%=com.title%>:-
+                <%=com.description%>.<br>
+               form: <%=com.name%> <br>
+               
+               Mobile: <%=com.mobile%><br>
+              Email:  <%=com.email%>
+              <%  if(com.resolved=="Yes"){%>
+                <button class="btn-resolve">Resolved✅</button>
+
+                
+                <%
+
+              } 
+              else if(com.resolved=="No"){
+                 %>
+              <form action="/resolved/<%=com.complainer_id%>" method="POST" > <button class="btn-resolve">Resolve</button></form>
+                </div>
+            <%
+
+              }
+             
+        } %>
+    </div>
+   
+   
+    <script>
+        document.querySelectorAll(".btn-resolve").forEach(button => {
+        button.addEventListener("click", (event) => {
+            const result = confirm("Are you sure?");
+            if (!result) {
+                event.preventDefault(); 
+            } else {
+                alert("Message sent to complainer");
+            }
+        });
+    });
+        function toggleProfile() {
+            var profileDetails = document.getElementById("profileDetails");
+            profileDetails.style.display = (profileDetails.style.display === "none" || profileDetails.style.display === "") ? "block" : "none";
+        }
+    </script>
+
+  <%- include("partials/footer") %>
+</body>
+</html>

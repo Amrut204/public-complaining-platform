@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+  body {
+   
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+input, select {
+    background: rgba(255, 255, 255, 0.2);
+    color: #333;
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+input:focus, select:focus {
+    border: 1px solid #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #218838;
+}
+
+.switch {
+    margin-top: 15px;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.switch a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.switch a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #333;
+}
+
+    </style>
+</head>
+<link rel="stylesheet" href="/style.css">
+
+<body>
+      <!-- Header -->
+  <%- include("partials/header") %>
+
+    <div class="container" style="margin-bottom: auto; margin-left: 450px; margin-top: 4px;">
+        <h1>Signup</h1>
+    
+        <form action="/signup" method="POST" onsubmit="return validateForm(event)">
+            <input id="username" type="text" placeholder="enter username" required name="username">
+            <input id="email" type="email" placeholder="Email" required name="email">
+            <input id="mobile" type="number" placeholder="mobile No" required name="mobile">
+            <input id="password" type="password" placeholder="Password" required name="password">
+    
+            <h2>Select District, Taluka, and Village</h2>
+            <body onload="updateDistricts()">
+            <label for="district">Select District:</label>
+            <select id="district" name="district" onchange="updateTalukas()">
+                <option value="">-- Select District --</option>
+            </select>
+    
+            <label for="taluka">Select Taluka:</label>
+            <select id="taluka" name="taluka" disabled>
+                <option value="">-- Select Taluka --</option>
+            </select>
+    
+            <label for="village">Enter Village/Nagar:</label>
+            <input type="text" id="village" name="village" placeholder="Enter village or nagar">
+    
+            <label for="role">Select Role:</label>
+            <select id="role" name="role">
+                <option name="civilian">Civilian</option>
+                <option>Area Representative</option>
+            </select>
+    
+            <button id="submit" type="submit">Sign Up</button>
+        </form>
+    
+        <p class="switch">Already have an account? <a href="/">Login</a></p>
+    </div>
+    
+    <script>
+        const role=document.getElementById("role");
+        if(!role.option=="civilian"){
+            alert("pls visit after 24 hours we will check that are you a authried person or not , if you are then you will be ap=ble to log in after 24 hours")
+        }
+
+    const stateDistrictTalukas = {
+    "Maharashtra": {
+        "Ahmednagar": ["Akole", "Jamkhed", "Karjat", "Kopargaon", "Nagar", "Nevasa", "Parner", "Pathardi", "Rahata", "Rahuri", "Sangamner", "Shevgaon", "Shrigonda", "Shrirampur"],
+        "Akola": ["Akola", "Akot", "Balapur", "Barshitakli", "Murtijapur", "Patur", "Telhara"],
+        "Amravati": ["Amravati", "Achalpur", "Chandur Railway", "Daryapur", "Morshi", "Nandgaon-Khandeshwar", "Warud", "Bhatkuli", "Chandur Bazar", "Dhamangaon Railway", "Teosa"],
+        "Aurangabad": ["Aurangabad", "Kannad", "Sillod", "Phulambri", "Vaijapur", "Gangapur", "Paithan", "Soygaon"],
+        "Beed": ["Beed", "Ashti", "Georai", "Kaij", "Majalgaon", "Parli", "Patoda", "Shirur (Kasar)", "Wadwani", "Ambejogai"],
+        "Bhandara": ["Bhandara", "Tumsar", "Sakoli", "Lakhani", "Pauni", "Mohadi", "Lakhandur"],
+        "Buldhana": ["Buldhana", "Chikhli", "Deulgaon Raja", "Jalgaon Jamod", "Khamgaon", "Lonar", "Malkapur", "Mehkar", "Motala", "Nandura", "Shegaon"],
+        "Chandrapur": ["Chandrapur", "Ballarpur", "Brahmapuri", "Mul", "Nagbhid", "Pombhurna", "Rajura", "Sawali", "Sindewahi", "Warora", "Gondpipri", "Jiwati", "Korpana"],
+        "Dhule": ["Dhule", "Sakri", "Shirpur", "Sindkheda"],
+        "Gadchiroli": ["Gadchiroli", "Aheri", "Armori", "Bhamragad", "Chamorshi", "Dhanora", "Desaiganj (Wadsa)", "Etapalli", "Kurkheda", "Mulchera", "Sironcha"],
+        "Gondia": ["Gondia", "Amgaon", "Arjuni Morgaon", "Deori", "Goregaon", "Sadak Arjuni", "Salekasa", "Tirora"],
+        "Hingoli": ["Hingoli", "Aundha (Nagnath)", "Basmat", "Kalamnuri", "Sengaon"],
+        "Jalgaon": ["Jalgaon", "Amalner", "Bhadgaon", "Bhusawal", "Bodwad", "Chalisgaon", "Chopda", "Dharangaon", "Erandol", "Jalgaon", "Jamner", "Muktainagar", "Pachora", "Parola", "Raver", "Yawal"],
+        "Jalna": ["Jalna", "Ambad", "Badnapur", "Bhokardan", "Ghansawangi", "Jafrabad", "Mantha", "Partur"],
+        "Kolhapur": ["Karvir", "Panhala", "Shahuwadi", "Kagal", "Hatkanangale", "Shirol", "Radhanagari", "Gaganbawada", "Bhudargad", "Gadhinglaj", "Chandgad", "Ajra"],
+        "Latur": ["Latur", "Ahmadpur", "Ausa", "Chakur", "Deoni", "Jalkot", "Nilanga", "Renapur", "Shirur-Anantpal", "Udgir"],
+        "Mumbai": [],
+        "Mumbai Suburban": ["Andheri", "Borivali", "Kurla"],
+        "Nagpur": ["Nagpur", "Hingna", "Kamthi", "Katol", "Kuhi", "Mauda", "Narkhed", "Parseoni", "Ramtek", "Saoner", "Umred"],
+        "Nanded": ["Nanded", "Ardhapur", "Bhokar", "Biloli", "Deglur", "Dharmabad", "Hadgaon", "Himayatnagar", "Kandhar", "Kinwat", "Loha", "Mahoor", "Mudkhed", "Mukhed", "Naigaon"],
+        "Nandurbar": ["Nandurbar", "Akkalkuwa", "Akrani", "Shahada", "Talode", "Navapur"],
+        "Osmanabad": ["Osmanabad", "Bhum", "Kalamb", "Lohara", "Omerga", "Paranda", "Tuljapur", "Washi"],
+        "Palghar": ["Palghar", "Dahanu", "Talasari", "Vasai", "Vikramgad", "Jawhar", "Mokhada", "Wada"],
+        "Parbhani": ["Parbhani", "Gangakhed", "Jintur", "Manwath", "Pathri", "Purna", "Sailu", "Sonpeth"],
+        "Solapur": ["Solapur", "Akkalkot", "Barshi", "Karmala", "Madha", "Mangalwedha", "Malshiras", "Mohol", "Pandharpur", "Sangole"],
+        "Wardha": ["Wardha", "Arvi", "Ashti", "Deoli", "Hinganghat", "Karanja", "Samudrapur", "Seloo"],
+        "Washim": ["Washim", "Karanja", "Mangrulpir", "Malegaon", "Manora", "Risod"],
+        "Yavatmal": ["Yavatmal", "Arni", "Babulgaon", "Darwha", "Digras", "Ghatanji", "Kalamb", "Mahagaon", "Maregaon", "Ner", "Pusad", "Ralegaon", "Umarkhed", "Wani", "Zari Jamni"]
+    }
+    }
+        function updateDistricts() {
+            let districtSelect = document.getElementById("district");
+            let talukaSelect = document.getElementById("taluka");
+
+            districtSelect.innerHTML = "<option value=''>-- Select District --</option>";
+            talukaSelect.innerHTML = "<option value=''>-- Select Taluka --</option>";
+            talukaSelect.disabled = true;
+
+            Object.keys(stateDistrictTalukas["Maharashtra"]).forEach(district => {
+                let option = document.createElement("option");
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            });
+
+            districtSelect.disabled = false;
+        }
+
+        function updateTalukas() {
+            let districtSelect = document.getElementById("district");
+            let talukaSelect = document.getElementById("taluka");
+
+            let selectedDistrict = districtSelect.value;
+            let talukas = stateDistrictTalukas["Maharashtra"]?.[selectedDistrict] || [];
+
+            talukaSelect.innerHTML = "<option value=''>-- Select Taluka --</option>";
+
+            talukas.forEach(taluka => {
+                let option = document.createElement("option");
+                option.value = taluka;
+                option.textContent = taluka;
+                talukaSelect.appendChild(option);
+            });
+
+            talukaSelect.disabled = talukas.length === 0;
+        }
+
+        function validateForm(event) {
+            let districtSelect = document.getElementById("district");
+            if (!districtSelect.value) {
+                alert("Please select a district.");
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
+            return true;
+        }
+
+        window.onload = function () {
+            updateDistricts();
+        };
+    </script>
+<br>
+<br><br><br>
+<footer style=" margin-top: 50px;
+background-color: rgb(138, 121, 121);
+max: width 100%;;
+
+  padding: 15px 0;
+  margin-top:auto; ">
+  <div class="footer">
+    <p>&copy; <%= new Date().getFullYear() %> Public Complaint Platform. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

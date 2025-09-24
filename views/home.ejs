@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Profile container positioned at top-left */
+        .profile-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-align: left;
+        }
+
+        /* Profile Icon Styling */
+        .profile-icon {
+            font-size: 40px;
+            color: #007bff;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Profile Details Styling */
+        .profile-details {
+            display: none;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 250px;
+            margin-top: 10px;
+        }
+
+        h3, h4 {
+            color: #007bff;
+            margin: 5px 0;
+        }
+
+        p {
+            font-size: 14px;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        #profileDetails,#comp {
+  display: none;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background: white;
+  padding: 15px;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000; /* 👈 ensures it's on top of navbar */
+}
+
+
+        .divider {
+            border-bottom: 2px solid #ddd;
+            margin: 10px 0;
+        }
+        textarea {
+            width: 300px;
+            margin-top: 100px;
+            margin-left: 500px;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        #inp{
+            margin-left: 500px;
+        }
+        #btn{
+
+            margin-left: 500px;
+        }
+    </style>
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+<header>
+  <div class="header" style="display:flex; justify-content:space-between; align-items:center; background: #3cef96; color:black; padding:10px 20px;">
+    <h1 style="margin:0;">Public Complaint Platform</h1>
+    <nav style="display:flex; gap:15px; align-items:center;">
+      <a class="link" href="/" style="color:black; text-decoration:none;">Home</a>
+      <a class="link" href="/about" style="color:black; text-decoration:none;">About</a>
+
+      <!-- Profile Text -->
+      <span class="profile-text" style="cursor:pointer;" onclick="toggleProfile()">Profile</span>
+
+      <!-- Complaints Text -->
+      <span class="complaints-text" style="cursor:pointer;" onclick="toggleComplaints()">Raised Complaints</span>
+    </nav>
+  </div>
+</header>
+
+
+    
+
+
+</div>
+  <br><br>
+
+   
+
+
+
+        <!-- Profile Details -->
+        <div  class="profile-details" id="profileDetails">
+            <h3>Profile</h3>
+            <p><strong>Username:</strong> <%= mainUser.username %></p>
+            <p><strong>Email:</strong> <%= mainUser.email %></p>
+            <p><strong>Mobile:</strong> <%= mainUser.mobile %></p>
+
+            <div class="divider"></div>
+
+            <h4>Address</h4>
+            <p><strong>District:</strong> <%= mainUser.district %></p>
+            <p><strong>Taluka:</strong> <%= mainUser.taluka %></p>
+            <p><strong>Village:</strong> <%= mainUser.village %></p>
+            <p><strong>your area representative:</strong><%=mainUser.role%></p>
+            <form action="/edit/<%=mainUser.id%>"><button>Edit Your Profile</button></form>
+            <form action="/logout"><button>logout</button></form>
+            
+        </div>
+    </div>
+    <div style="margin-bottom:10px ;">
+ <form action="/home2/<%=mainUser.district%>/<%=mainUser.taluka%>/<%=mainUser.village%>/<%=mainUser._id%>" method="POST">
+   <div> <textarea name="complaint" id="com" placeholder="enter your complain"></textarea><br>
+
+ 
+    <div style="margin-left: 500px;">
+       
+            <div style="display: flex;"><input type="file" name="file" id="file" style=""></div>
+        <div style="display: flex;">
+            <p>Username-</p>
+            <input type="text" name="username" value="<%= mainUser.username %>" style="margin-left: 5px;">
+        </div>
+        
+        <div style="display: flex;">
+            <p>Mobile-</p>
+            <input type="text" name="mobile" value="<%= mainUser.mobile %>" style="margin-left: 28px;">
+        </div>
+  
+        <div style="display: flex;">
+            <p>Email-</p>
+            <input type="text" name="email" value="<%= mainUser.email %>" style="margin-left: 34px;">
+        </div>
+    </div>
+    <br>
+    <button style="margin-bottom: 10px;" id="btn" type="submit">Submit</button>
+  
+ </form></div>
+ 
+ <div id="comp" style="display: none; position: absolute; top: 70px; right: 20px; background: white; padding: 15px; width: 300px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-height: 400px; overflow-y: auto;">
+    <h3 style="color: #007bff;">Your Complaints</h3>
+    <% for (let com of mainUser.complaint) { %>
+        <div style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+            <p><strong><%= com.title %></strong></p>
+            <p><%= com.description %></p>
+            <p><strong>From:</strong> <%= com.name %></p>
+            <p><strong>Mobile:</strong> <%= com.mobile %></p>
+            <p><strong>Email:</strong> <%= com.email %></p>
+            <p><strong>Resolved:</strong> <%= com.resolved %></p>
+        </div>
+    <% } %>
+</div>
+
+
+    <script>
+        document.getElementById("btn").addEventListener("click",()=>{
+            alert("your complaint is sent");
+        })
+        function toggleProfile() {
+            var profileDetails = document.getElementById("profileDetails");
+            profileDetails.style.display = (profileDetails.style.display === "none" || profileDetails.style.display === "") ? "block" : "none";
+        }
+        function toggleComplaints() {
+    const compSection = document.getElementById("comp");
+    compSection.style.display = compSection.style.display === "none" || compSection.style.display === "" ? "block" : "none";
+}
+
+
+    </script>
+
+  <%- include("partials/footer") %>
+</body>
+</html>

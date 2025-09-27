@@ -279,7 +279,7 @@ app.post("/home2/:district/:taluka/:village/:id",async(req,res)=>{
 
         }
         else{
-            throw new Error("AREA REPRESENTATIVE MISSING")
+          res.send("area representative not found")
         }
     })
     await login.findById(id).
@@ -290,7 +290,7 @@ app.post("/home2/:district/:taluka/:village/:id",async(req,res)=>{
 
         }
         else{
-            throw new Error("AREA REPRESENTATIVE MISSING")
+          res.send("area representative not found")
         }
     }).then(data=>{
         res.redirect("/home")

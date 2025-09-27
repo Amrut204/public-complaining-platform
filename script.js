@@ -271,30 +271,31 @@ app.post("/home2/:district/:taluka/:village/:id",async(req,res)=>{
         complainer_id:generateRandomId(10),
 
     }
-    await login.findOne({district:district,taluka:taluka,village:village,role:"Area Representative"}).
-    then(user=>{
-        if(user){
-            user.complaint.push(complaintobj);
-            return user.save();
+   try {
+        // Find Area Representative
+        const areaRep = await login.findOne({ district, taluka, village, role: "Area Representative" });
+        if (!areaRep) {
+             return res.send("there is no arear representative signed in for your village");
+        }
 
+        // Find civilian user
+        const civilian = await login.findById(id);
+        if (!civilian) {  return res.send("there is no arear representative signed in for your village");
+          
         }
-        else{
-          res.send("area representative not found")
-        }
-    })
-    await login.findById(id).
-    then(user=>{
-        if(user){
-            user.complaint.push(complaintobj);
-            return user.save();
 
-        }
-        else{
-          res.send("area representative not found")
-        }
-    }).then(data=>{
-        res.redirect("/home")
-    })
+        // Add complaint to both users
+        areaRep.complaint.push(complaintobj);
+        await areaRep.save();
+
+        civilian.complaint.push(complaintobj);
+        await civilian.save();
+
+        return res.redirect("/home");
+    } catch (err) {
+        console.error(err);
+        return res.redirect("/home?areaRepMissing=1");
+    }
  
 })
 //route to ensure resolved//

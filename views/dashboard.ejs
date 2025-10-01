@@ -5,33 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Public Complaint Platform</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    /* Fade-in animation for main container */
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Button hover animation */
+    .btn-hover:hover {
+      transform: translateY(-2px) scale(1.02);
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
 </head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
   <!-- Header -->
   <%- include("partials/header") %>
 
-  <div  style="margin-left: 400px;" class="bg-white shadow-lg rounded-2xl p-10 w-full max-w-md text-center">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Welcome to Public Complaint Platform</h1>
-    <p class="text-gray-600 mb-8">Please choose an option to continue</p>
+  <!-- Main Content -->
+  <main class="flex-grow flex items-center justify-center">
+    <div class="fade-in bg-white shadow-xl rounded-3xl p-10 w-full max-w-md text-center mx-4 sm:mx-auto">
+      <h1 class="text-3xl font-extrabold text-gray-900 mb-4">Welcome to Public Complaint Platform</h1>
+      <p class="text-gray-600 mb-8">Choose your role to continue</p>
 
-    <div  class="space-y-4">
-      <a href="/login" class="block w-full py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition">
-        Login as Civilian
-      </a>
+      <div class="space-y-4">
+        <!-- Civilian Login -->
+        <a href="/login" class="block py-3 bg-gray-100 text-gray-900 rounded-xl btn-hover hover:bg-gray-200 transition font-medium">
+          Login as Civilian
+        </a>
 
-      <a href="/login" class="block w-full py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 transition">
-        Login as Area Representative
-      </a>
+        <!-- Area Representative Login -->
+        <a href="/login" class="block py-3 bg-gray-200 text-gray-900 rounded-xl btn-hover hover:bg-gray-300 transition font-medium">
+          Login as Area Representative
+        </a>
 
-      <a href="/loginasadmin" class="block w-full py-3 bg-gray-700 text-white rounded-xl hover:bg-gray-800 transition">
-        login as admin
-      </a>
-         <a href="/signup" class="block w-full py-3 bg-gray-700 text-white rounded-xl hover:bg-gray-800 transition">
-        Signup
-      </a>
+        <!-- Admin Login -->
+        <a href="/loginasadmin" class="block py-3 bg-gray-800 text-white rounded-xl btn-hover hover:bg-gray-900 transition font-medium">
+          Login as Admin
+        </a>
+
+        <!-- Signup -->
+        <a href="/signup" class="block py-3 bg-gray-700 text-white rounded-xl btn-hover hover:bg-gray-800 transition font-medium">
+          Signup
+        </a>
+      </div>
     </div>
-  </div>
-  
-  <%- include("partials/footer") %>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto">
+    <%- include("partials/footer") %>
+  </footer>
+
 </body>
 </html>

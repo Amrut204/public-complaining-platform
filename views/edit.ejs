@@ -1,113 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
-    <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile | Public Complaint Platform</title>
+  <link rel="stylesheet" href="/style.css">
 
-    <style>
-  body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
+      margin: 0;
+    }
 
-    background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
-    flex-direction: column;
-    margin: 0;
-}
+    .container {
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(12px);
+      padding: 30px 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.container {
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(12px);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 350px;
-}
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    }
 
-input, select, button {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    transition: all 0.3s ease-in-out;
-}
+    h1 {
+      font-size: 26px;
+      color: #343a40;
+      margin-bottom: 25px;
+    }
 
-input, select {
-    background: rgba(255, 255, 255, 0.2);
-    color: #333;
-    outline: none;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-}
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      font-size: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      outline: none;
+      transition: all 0.3s ease;
+    }
 
-input:focus, select:focus {
-    border: 1px solid #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
+    input {
+      background: rgba(255, 255, 255, 0.2);
+    }
 
-button {
-    background: #28a745;
-    color: white;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-}
+    input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+    }
 
-button:hover {
-    background: #218838;
-}
+    button {
+      background-color: #28a745;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
 
-.switch {
-    margin-top: 15px;
-    color: #007bff;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-}
+    button:hover {
+      background-color: #218838;
+      transform: scale(1.02);
+    }
 
-.switch a {
-    text-decoration: none;
-    color: #007bff;
-}
+    .switch {
+      margin-top: 15px;
+      font-size: 14px;
+    }
 
-.switch a:hover {
-    text-decoration: underline;
-}
+    .switch a {
+      color: #007bff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
 
-h1 {
-    margin-bottom: 15px;
-    font-size: 24px;
-    color: #333;
-}
+    .switch a:hover {
+      text-decoration: underline;
+      color: #0056b3;
+    }
 
-    </style>
+    @media (max-width: 576px) {
+      .container {
+        width: 90%;
+        padding: 20px 15px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Header -->
+  <%- include("partials/header") %>
 
-    <div class="container">
-        <h1>Signup</h1>
-    
-        <form action="/edit/<%=edit.id%>?_method=PUT" method="POST" onsubmit="return validateForm(event)">
-            <input id="username" type="text" 
-           value="<%=edit.username%>" placeholder="enter username" required name="username">
-            <input id="email" value="<%=edit.email%>" type="email" placeholder="Email" required name="email">
-            <input id="mobile" value="<%edit.mobile%>" type="number" placeholder="mobile No" required name="mobile">
-            <input id="password" type="password" placeholder="Password" required name="password">
-    
-           
-    
-            <button id="submit" type="submit">Update</button>
-        </form>
-    
-      
-   
+  <div class="container">
+    <h1>Edit Profile</h1>
+
+    <form action="/edit/<%= edit.id %>?_method=PUT" method="POST" onsubmit="return validateForm(event)">
+      <input id="username" type="text" value="<%= edit.username %>" placeholder="Enter username" required name="username">
+      <input id="email" type="email" value="<%= edit.email %>" placeholder="Email" required name="email">
+      <input id="mobile" type="number" value="<%= edit.mobile %>" placeholder="Mobile No" required name="mobile">
+      <input id="password" type="password" placeholder="Password" name="password">
+      <button type="submit">Update Profile</button>
+    </form>
+
+    <p class="switch">Want to go back? <a href="/profile">Back to Profile</a></p>
+  </div>
 
   <%- include("partials/footer") %>
+
+  <script>
+    function validateForm(event) {
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+
+      if (!username || !email || !mobile) {
+        alert('Please fill all required fields.');
+        event.preventDefault();
+        return false;
+      }
+
+      if (mobile.length < 10) {
+        alert('Mobile number should be at least 10 digits.');
+        event.preventDefault();
+        return false;
+      }
+
+      return true;
+    }
+  </script>
 </body>
 </html>

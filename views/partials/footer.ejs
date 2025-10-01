@@ -1,5 +1,27 @@
-<footer>
-  <div class="footer">
-    <p>&copy; <%= new Date().getFullYear() %> Public Complaint Platform. All rights reserved.</p>
+<footer class="bg-dark text-light py-3 mt-auto">
+  <div class="container text-center">
+    <p class="mb-0">&copy; <%= new Date().getFullYear() %> Public Complaint Platform. All rights reserved.</p>
   </div>
 </footer>
+
+<style>
+  /* Ensure footer sticks to the bottom */
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1 0 auto; /* Makes main content grow to push footer down */
+  }
+
+  footer {
+    flex-shrink: 0; /* Prevent footer from shrinking */
+  }
+</style>

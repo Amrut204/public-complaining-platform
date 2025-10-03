@@ -4,108 +4,104 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <link rel="stylesheet" href="/style.css">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
     body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column; /* stack header, main, footer */
-  min-height: 100vh;
-  background-color: #f4f4f4;
-  margin: 0;
-}
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    }
 
-main {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 15px; /* spacing so form doesn’t touch header/footer */
-}
+    main {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 15px;
+    }
 
-.container {
-  background: white;
-  padding: 30px 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  text-align: center;
-  width: 100%;
-  max-width: 380px;
-}
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.container h2 {
-  margin-bottom: 20px;
-  color: #333;
-}
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 12px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 15px;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
+    .form-control {
+      border-radius: 10px;
+      padding: 12px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
 
-input:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 4px rgba(0,123,255,0.5);
-}
+    .form-control:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 8px rgba(13, 110, 253, 0.4);
+    }
 
-button {
-  width: 100%;
-  padding: 12px;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s ease;
-}
+    .btn-custom {
+      border-radius: 10px;
+      font-size: 16px;
+      padding: 12px;
+      transition: all 0.3s ease;
+    }
 
-button:hover {
-  background: #218838;
-}
+    .btn-custom:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
 
-.switch {
-  margin-top: 15px;
-  font-size: 14px;
-}
+    .switch {
+      margin-top: 15px;
+      font-size: 14px;
+    }
 
-.switch a {
-  color: #007bff;
-  text-decoration: none;
-  transition: text-decoration 0.3s;
-}
+    .switch a {
+      color: #0d6efd;
+      text-decoration: none;
+    }
 
-.switch a:hover {
-  text-decoration: underline;
-}
-
+    .switch a:hover {
+      text-decoration: underline;
+    }
   </style>
-  <link rel="stylesheet" href="/style.css">
-
 </head>
 <body>
   <!-- Header -->
   <%- include("partials/header") %>
 
   <main>
-    <div class="container">
-      <h2>Login</h2>
+    <div class="card p-4 p-md-5 text-center bg-white" style="max-width: 400px; width: 100%;">
+      <h2 class="fw-bold mb-4">Login</h2>
       <form method="POST" action="/adminlogin">
-        <input type="text" placeholder="Username" required name="username">
-        <input type="password" placeholder="Password" required name="password">
-        <button type="submit">Login</button>
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="Username" required name="username">
+        </div>
+        <div class="mb-4">
+          <input type="password" class="form-control" placeholder="Password" required name="password">
+        </div>
+        <button type="submit" class="btn btn-success w-100 btn-custom">Login</button>
       </form>
-  
+
+      <div class="switch mt-3">
+        <p>Don’t have an account? <a href="/signup">Sign up</a></p>
+      </div>
     </div>
   </main>
 
   <!-- Footer -->
   <%- include("partials/footer") %>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -3,109 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Login | Public Complaint Platform</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Optional custom CSS -->
   <link rel="stylesheet" href="/style.css">
+
   <style>
+    /* Body and Background */
     body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column; /* stack header, main, footer */
-  min-height: 100vh;
-  background-color: #f4f4f4;
-  margin: 0;
-}
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-main {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 15px; /* spacing so form doesn’t touch header/footer */
-}
+    main {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 15px;
+    }
 
-.container {
-  background: white;
-  padding: 30px 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  text-align: center;
-  width: 100%;
-  max-width: 380px;
-}
+    /* Login Card */
+    .login-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 35px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 400px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.container h2 {
-  margin-bottom: 20px;
-  color: #333;
-}
+    .login-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 12px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 15px;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
+    /* Heading */
+    .login-card h2 {
+      margin-bottom: 25px;
+      text-align: center;
+      font-weight: 600;
+      color: #343a40;
+    }
 
-input:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 4px rgba(0,123,255,0.5);
-}
+    /* Form Inputs */
+    .form-control {
+      border-radius: 12px;
+      padding: 12px 15px;
+      border: 1px solid #ced4da;
+      transition: all 0.3s ease;
+    }
 
-button {
-  width: 100%;
-  padding: 12px;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s ease;
-}
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0,123,255,0.25);
+    }
 
-button:hover {
-  background: #218838;
-}
+    /* Login Button */
+    .btn-login {
+      background: linear-gradient(to right, #007bff, #00aaff);
+      color: #fff;
+      font-weight: 500;
+      border-radius: 12px;
+      padding: 10px 0;
+      transition: all 0.3s ease;
+    }
 
-.switch {
-  margin-top: 15px;
-  font-size: 14px;
-}
+    .btn-login:hover {
+      background: linear-gradient(to right, #0069d9, #0099dd);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
 
-.switch a {
-  color: #007bff;
-  text-decoration: none;
-  transition: text-decoration 0.3s;
-}
+    /* Signup Link */
+    .switch {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+    }
 
-.switch a:hover {
-  text-decoration: underline;
-}
+    .switch a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+    }
 
+    .switch a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 576px) {
+      .login-card {
+        padding: 30px 20px;
+      }
+    }
   </style>
-  <link rel="stylesheet" href="/style.css">
-
 </head>
 <body>
+
   <!-- Header -->
   <%- include("partials/header") %>
 
   <main>
-    <div class="container">
+    <div class="login-card">
       <h2>Login</h2>
       <form method="POST" action="/login">
-        <input type="text" placeholder="Username" required name="username">
-        <input type="password" placeholder="Password" required name="password">
-        <button type="submit">Login</button>
+        <div class="mb-3">
+          <input type="text" name="username" class="form-control" placeholder="Username" required>
+        </div>
+        <div class="mb-3">
+          <input type="password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn btn-login w-100">Login</button>
       </form>
-      <p class="switch">Don't have an account? <a href="/signup">Sign up</a></p>
+      <p class="switch">
+        Don't have an account? <a href="/signup">Sign up</a>
+      </p>
     </div>
   </main>
 
   <!-- Footer -->
   <%- include("partials/footer") %>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

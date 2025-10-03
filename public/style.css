@@ -7,7 +7,7 @@
 
 /* Header */
 header {
-  background-color: #3cef96;
+  background-color: #e7e7bd;
 
   padding: 15px 0;
   position: sticky;
@@ -37,4 +37,16 @@ footer .footer {
 link{
      margin-left: 5px;
      margin-right: 5px
+}
+header nav a, 
+header .profile-toggle, 
+header .complaints-toggle {
+    text-decoration: none; /* remove underline */
+    color: white;           /* ensure text color */
+}
+
+header nav a:hover,
+header .profile-toggle:hover,
+header .complaints-toggle:hover {
+    text-decoration: underline; /* optional: underline on hover */
 }

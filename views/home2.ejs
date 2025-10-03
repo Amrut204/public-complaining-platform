@@ -159,6 +159,9 @@
                 <button class="btn btn-success btn-resolve" disabled>Resolved ✅</button>
               <% } else { %>
                 <form action="/resolved/<%= com.complainer_id %>" method="POST">
+               <input type="hidden"  name="email" value="<%=com.email%>">
+                <input type="hidden" name="desc" value="<%=com.description%>">
+              
                   <button class="btn btn-warning btn-resolve">Resolve</button>
                 </form>
               <% } %>

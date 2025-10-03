@@ -298,9 +298,29 @@ app.post("/home2/:district/:taluka/:village/:id",async(req,res)=>{
     }
  
 })
+
 //route to ensure resolved//
 app.post("/resolved/:id",async(req,res)=>{
     const{id}=req.params;
+    const {email,desc}=req.body;
+     let transporter=nodemailler.createTransport({
+    service:"gmail",
+    auth:{
+      user:process.env.EMAIL,
+      pass:process.env.APPPASS
+    }
+  })
+  let mailOption={
+    from:process.env.FROMEMAIL,
+    to:email,
+    subject:"regarding your complaint",
+    text:"your complaint '"+desc+" 'is now resolved please check by yourself"
+  };
+  try{
+    await transporter.sendMail(mailOption);
+  }catch(error){
+    res.status(500).send("erro sending email")
+  }
     
   let resolve1=await login.updateMany(
   { "complaint.complainer_id": String(id),},
@@ -313,21 +333,6 @@ console.log(resolve1)
     res.redirect("/home2")
 })
 
-//about route
-app.get("/about",async(req,res)=>{
-    res.render("about.ejs")
-})
-
-//contact us route
-app.get("/contact",async(req,res)=>{
-    res.render("contact.ejs")
-})
-//route for admin render
-app.get("/admin",async(req,res)=>{
- let reps= await admin.find();
-
-    res.render("admindashboard.ejs",{reps})
-})
 app.get("/loginasadmin",async(req,res)=>{
 res.render("adminlogin.ejs")
 })
